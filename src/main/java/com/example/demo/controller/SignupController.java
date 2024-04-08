@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
-import org.springframework.context.MessageSource;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.form.SignupForm;
-import com.example.demo.service.LoginService;
+import com.example.demo.service.SignupService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,15 +21,9 @@ import lombok.RequiredArgsConstructor;
 public class SignupController {
 	
 	/*ユーザー登録service*/
-	private final LoginService service;
+	private final SignupService service;
 	
-	/*PasswordEncoder*/
-	/*passwordencoderの中にBeanで定義したBCryp...が入る*/
-	private final PasswordEncoder passwordencoder;
-	
-	/*メッセージソース*/
-	private final MessageSource messageSource;
-	
+
 	
 	/*初期表示
 	 * 
@@ -55,6 +47,8 @@ public class SignupController {
 	
 	@PostMapping("/signup")
 	public void signup(Model model,SignupForm form) {
+		var userInfo=service.resistUserInfo(form);
+		
 		
 		}
 	}

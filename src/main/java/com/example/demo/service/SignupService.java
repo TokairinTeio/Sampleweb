@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import org.apache.catalina.mapper.Mapper;
-import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.UserInfo;
@@ -22,17 +22,22 @@ public class SignupService {
 	/*Dozer Mapper*/
 	private final Mapper mapper;
 	
+	/*PasswordEncoder*/
+	/*passwordencoderの中にBeanで定義したBCryp...が入る*/
+	private final PasswordEncoder passwordencoder;
+	
+	
 	/**
 	 * ユーザー情報テーブル 新規登録
 	 * 
 	 * @param form 入力情報
-	 * @return　ユーザー情報テーブルをキー検索した結果（1件）
+	 * @return　登録情報：ユーザー情報Entity
 	 */
-	public UserInfo sresistUserInfo(SignupForm form){
-		var userInfo= new UserInfo();
-		var mapper= new DozerBeanMapper();
-		userInfo.setLoginId(form.getLoginId());
-		userInfo.setPassword(form.getPassword());
+	public  UserInfo resistUserInfo(SignupForm form){
+		var userInfo=mapper.map(form, UserInfo.class);
+		var encordedPassword=passwordencoder.encode(form.getPassword());
+		userInfo.setPassword(encordedPassword);
+
 		return repository.save(userInfo);
 	}
 	
