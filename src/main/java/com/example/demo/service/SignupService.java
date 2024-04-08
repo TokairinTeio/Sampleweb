@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.Optional;
+
 import org.dozer.Mapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,14 +33,18 @@ public class SignupService {
 	 * ユーザー情報テーブル 新規登録
 	 * 
 	 * @param form 入力情報
-	 * @return　登録情報：ユーザー情報Entity
+	 * @return　登録情報：ユーザー情報Entity,既に登録がある場合はEnpty
 	 */
-	public  UserInfo resistUserInfo(SignupForm form){
+	public Optional <UserInfo> resistUserInfo(SignupForm form){
+		var userInfoExistedOpt=repository.findById(form.getLoginId());
+		if(userInfoExistedOpt.isPresent()) {
+			return Optional.empty();  //登録済みならOptinal.empty==trueを返す。なしなら==false
+		}
 		var userInfo=mapper.map(form, UserInfo.class);
 		var encordedPassword=passwordencoder.encode(form.getPassword());
 		userInfo.setPassword(encordedPassword);
 
-		return repository.save(userInfo);
+		return Optional.of(repository.save(userInfo));
 	}
 	
 
