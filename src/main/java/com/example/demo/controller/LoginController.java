@@ -53,7 +53,7 @@ public class LoginController {
 	public String login(Model model,LoginForm form) {
 		System.out.println(form.toString());
 		var userInfo=service.searchUserById(form.getLoginId());
-		var encoderdPassword=passwordencoder.encode(form.getPassword());
+		//var encoderdPassword=passwordencoder.encode(form.getPassword());
 		var isCorrectUserAuth=userInfo.isPresent() 
 				//userIdが存在しない時false
 				//userIdは取れたが、入力されたPWと登録されたPWが違う時false
