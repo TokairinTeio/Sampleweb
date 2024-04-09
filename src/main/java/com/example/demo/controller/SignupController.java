@@ -36,6 +36,8 @@ public class SignupController {
 	/*メッセージソース*/
 	private final MessageSource messageSource;
 	
+	
+	
 
 	
 	/*初期表示
