@@ -4,6 +4,8 @@ package com.example.demo.constant;
  * エラーメッセージID定数クラス
  */
 public class MessageConst {
+	/*共通:入力内容誤り*/
+	public static final String FORM_ERROR="commonformError";
 	/*ログイン画面:入力内容誤り*/
 	public static final String LOGIN__WRONG_INPUT="loginwrongInput";
 	/*ユーザー登録済み：既に登録されているログインID*/
