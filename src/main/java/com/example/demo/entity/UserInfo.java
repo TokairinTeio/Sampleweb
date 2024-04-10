@@ -23,6 +23,7 @@ public class UserInfo {
 	/*パスワード*/
 	private String password;
 	
+	@Column
 	private String authority;
 	
 	

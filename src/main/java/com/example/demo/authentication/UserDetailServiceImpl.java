@@ -35,7 +35,6 @@ public class UserDetailServiceImpl implements UserDetailsService{
 				
 		return User.withUsername(userInfo.getLoginId())
 				.password(userInfo.getPassword())
-		       // .roles("USER")
 				.authorities(userInfo.getAuthority())
 		        .build();     //セットした情報でuserを作る
 	}

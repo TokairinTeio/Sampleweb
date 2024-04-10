@@ -27,6 +27,7 @@ public class MenuController {
 				.allMatch(authority -> authority.getAuthority()
 				.equals(AuthorityKind.ITEM_AND_USER_MANAGER.getAuthorityKind()));
 		model.addAttribute("hasUserManageAuth",hasUserManageAuth);
+		
 		return "menu";
 	}
 	
