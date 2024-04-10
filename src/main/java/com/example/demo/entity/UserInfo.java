@@ -23,6 +23,10 @@ public class UserInfo {
 	/*パスワード*/
 	private String password;
 	
+	private String authority;
+	
+	
+	
 	
 	
 	
