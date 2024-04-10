@@ -21,5 +21,7 @@ public class MenuController {
 	public String view() {
 		return "menu";
 	}
+	
+   
 
 }

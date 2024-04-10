@@ -12,5 +12,6 @@ public class MessageConst {
 	public static final String SIGNUP_EXISTED_LOGIN_ID="signupexistedLoginId";
 	/*ユーザー登録：完了メッセージ*/
 	public static final String SIGNUP_RESIST_SUCCEED="signupresistSuccceed";
-
+	
+	
 }

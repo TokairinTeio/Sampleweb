@@ -39,6 +39,7 @@ public class WebSecurityConfig {
 		    .formLogin(login -> login.loginPage(UrlConst.LOGIN)//自作ログイン画面(Controller)を使うための設定
 			.usernameParameter(USERNAME_PARAMETER)//ユーザー名パラメーターのname属性
 			.defaultSuccessUrl(UrlConst.MENU));//ログイン成功後のリダイレクトURL
+		  
 		
 		
 		return http.build();

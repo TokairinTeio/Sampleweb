@@ -1,5 +1,6 @@
 package com.example.demo.authentication;
 
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,9 +18,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService{
 	
+
 	/*ユーザー情報テーブルRepository*/
 	private final UserInfoRepository repository;
-	
 	
 	/**
 	 * ユーザー情報生成
@@ -37,5 +38,5 @@ public class UserDetailServiceImpl implements UserDetailsService{
 		        .roles("USER")
 		        .build();     //セットした情報でuserを作る
 	}
-
+	
 }
