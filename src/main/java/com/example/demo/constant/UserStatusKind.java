@@ -13,8 +13,8 @@ public enum UserStatusKind {
 	/*使用不可*/
 	DISABLED(true,"利用不可");
 	
-	/*DB登録値*/
-	private boolean value;
+	/*利用不可か*/
+	private boolean isDisabled;
 	
 	/*画面を表示する説明文*/
 	private String displayValue;
