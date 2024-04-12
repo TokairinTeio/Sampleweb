@@ -12,6 +12,12 @@ public class MessageConst {
 	public static final String SIGNUP_EXISTED_LOGIN_ID="signupexistedLoginId";
 	/*ユーザー登録：完了メッセージ*/
 	public static final String SIGNUP_RESIST_SUCCEED="signupresistSuccceed";
+	/*ユーザー一覧画面：存在しないログインID*/
+	public static final String USERLIST_NON_EXISTED_LOGIN_ID="userList.nonExistedLoginId";
+	
+	/*ユーザー一覧画面：ユーザー削除完了*/
+	public static final String USERLIST_DELETE_SUCCEED="userList.deleteSucceed";
+	
 	
 	
 }

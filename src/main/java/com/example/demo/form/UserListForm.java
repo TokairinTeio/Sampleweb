@@ -23,5 +23,14 @@ public class UserListForm {
 	
 	private AuthorityKind authorityKind;
 	
+	private String selectedLoginId;
+	
+	
+	public UserListForm clearSelectedLoginId() {
+		this.selectedLoginId=null;
+		
+		return this;
+	}
+	
 
 }
