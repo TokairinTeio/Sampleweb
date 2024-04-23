@@ -1,3 +1,4 @@
+
 package com.example.demo.config;
 
 import org.springframework.context.MessageSource;
@@ -19,45 +20,52 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+	
 	/*パスワードエンコーダー*/
 	private final PasswordEncoder passwordEncoder;
-	/*ユーザー情報取得Service*/
+	
+	/*ユーザー情報取得*/
 	private final UserDetailsService userDetailsService;
+	
 	/*メッセージ取得*/
 	private final MessageSource messageSource;
-	/*ユーザーname属性*/
-	private final String USERNAME_PARAMETER="loginId";
 	
-	
+	/*ユーザー名のname属性*/
+	private final String USER_NAME_PARAMETER="loginId";
+	/**
+	 * Spring Securityカスタマイズ用
+	 * @param http　カスタマイズパラメーター
+	 * @return　カスタマイズ結果
+	 * @throws Exception　予期せぬ例外
+	 */
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
 		
-		http
-		    .authorizeHttpRequests(
+		//ログインに成功したら/menuがリダイレクトされる
+		http.authorizeHttpRequests(
 				authorize -> authorize.requestMatchers(UrlConst.NO_AUTHENTICATION).permitAll()
-				   .anyRequest().authenticated())
-		    .formLogin(login -> login.loginPage(UrlConst.LOGIN)//自作ログイン画面(Controller)を使うための設定
-			.usernameParameter(USERNAME_PARAMETER)//ユーザー名パラメーターのname属性
-			.defaultSuccessUrl(UrlConst.MENU));//ログイン成功後のリダイレクトURL
-		  
-		
+				 .anyRequest().authenticated())
+		   .formLogin(
+				login -> login.loginPage(UrlConst.LOGIN)//自作ログイン画面(Controller)を使うための設定
+				.usernameParameter(USER_NAME_PARAMETER)//ユーザー名パラメーターのname属性
+				.defaultSuccessUrl(UrlConst.MENU))//ログイン成功時のリダイレクトURL
+		   .logout(logout -> logout.logoutSuccessUrl(UrlConst.SIGNUP));
 		
 		return http.build();
 	}
 	/**
-	 * Provider 定義
-	 * @return　カスタマイズProvider情報
+	 * Provider定義
+	 * @return カスタマイズProvider情報
 	 */
 	@Bean
-	//既存のプロバイダーをカスタマイズしたものに変更できる
 	AuthenticationProvider daoAuthenticationProvider() {
 		DaoAuthenticationProvider provider= new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService);
+		provider.setUserDetailsService(userDetailsService);//設定
 		provider.setPasswordEncoder(passwordEncoder);
-		provider.setMessageSource(messageSource);
+		provider.setMessageSource(messageSource); //エラーメッセージを変更する
 		
-		return provider;
-		
+		return provider; //明示的に詰めないと中身が空になってしまう。
 	}
+	
 
 }

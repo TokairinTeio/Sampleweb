@@ -20,84 +20,66 @@ import com.example.demo.util.AppUtil;
 
 import lombok.RequiredArgsConstructor;
 
-/*Controller画面の入力値を受け取る、Serviceクラスを呼び出す、遷移先の画面を決める*/
 /**
- * ユーザー登録画面Constructor
- * 
+ * ユーザー登録画面
  */
-
 @Controller
 @RequiredArgsConstructor
+//@RequestMapping("/login")
 public class SignupController {
 	
-	/*ユーザー登録service*/
+	/*登録画面 Service*/
 	private final SignupService service;
 	
 	/*メッセージソース*/
-	private final MessageSource messageSource;
+	private final MessageSource messagesource;
 	
 	
 	
-
-	
-	/*初期表示
-	 * 
-	 * @param model モデル
-	 * @param form 入力情報
-	 * @return 表示画面
-	 * 
-	 * 
-	 * */
 	@GetMapping(UrlConst.SIGNUP)
-	public String view(Model model,SignupForm form ) {
+	public String view(Model model,SignupForm form) {
+		
 		
 		return "signup";
 	}
-	/**
-	 * ユーザー登録
-	 * @param model　モデル
-	 * @param form　入力情報
-	 * @return　表示画面
-	 *  @param form　入力チェック
-	 * @return　表示画面
-	 */
 	
-	@PostMapping("/signup")
-	public void signup(Model model,@Validated SignupForm form,BindingResult bdResult) {
-		if(bdResult.hasErrors()) {
+	
+	@PostMapping("/signup") // /loginのURLで受け取る
+	public void  signup(Model model,@Validated SignupForm form,BindingResult bdResult) {//Modelクラスを使えば画面にControllerからの情報を渡せる
+		                                //@Validated:formの@チェックが入るBindingResult:@Validatedがついたフォームの入力チェック結果が保管される
+		if(bdResult.hasErrors()) { //hasErrors：エラーが会った時の処理を実装できる
 			editGuideMessage(model,MessageConst.FORM_ERROR,true);
 			return;
+			
 		}
-		var userInfoOpt=service.resistUserInfo(form);
-		var signupMessage= judgeMessages(userInfoOpt);
-		var messageId=AppUtil.getMessage(messageSource,signupMessage.getMessageId());
-		model.addAttribute("message",messageId);
-		model.addAttribute("isError",signupMessage.isError());
-		editGuideMessage(model,signupMessage.getMessageId(),signupMessage.isError());
+		var userInfoOpt=service.resistUserInfo(form); //ContorollerでServiceから戻ってきた変数をチェック
+		var signupMessage =judgeMessageKey(userInfoOpt); 
+			editGuideMessage(model,signupMessage.getMessageId(),signupMessage.isErrror());
 			
 	}
 	/**
 	 * 画面に表示するガイドメッセージを設定する
 	 * @param model　モデル
-	 * @param messsageId　メッセージID
-	 * @param isError　エラー有無
+	 * @param messageId　メッセージID
+	 * @param isError エラー有無
 	 */
-	private void editGuideMessage(Model model,String messsageId,boolean isError) {
-		var message=AppUtil.getMessage(messageSource,messsageId);
-		model.addAttribute("message",message);
+	private void editGuideMessage(Model model,String messageId,boolean isError) {
+		var message=AppUtil.getMessage(messagesource,messageId);
+		model.addAttribute("message", message);
 		model.addAttribute("isError",isError);
 	}
 	
-	private SignupMessage judgeMessages(Optional<UserInfo>userInfoOpt) {
+	
+	
+	
+	//メッセージ内容を変えるメソッド
+	private SignupMessage judgeMessageKey(Optional<UserInfo>userInfoOpt) {
 		if(userInfoOpt.isEmpty()) {
 			return SignupMessage.EXISITED_LOGIN_ID;
-			
 		}else {
 			return SignupMessage.SUCCEED;
 		}
 	}
-}
 	
-
-
-
+	
+}

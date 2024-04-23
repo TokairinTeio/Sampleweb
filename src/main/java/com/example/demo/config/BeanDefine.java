@@ -8,21 +8,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
-/**
- * ConfigurationとセットでBeanで付与したメソッドはDIコンテナに登録され
- * DI注入（RequiredArgsConstructor配下でprivate finalしてインスタンス化）することができる
- */
+
+
 @Configuration
 public class BeanDefine {
-	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+    @Bean
+    PasswordEncoder passwordEncoder() {
+    	
+		return new  BCryptPasswordEncoder();
 	}
-	
-	@Bean
-	Mapper mapper() {
-		return DozerBeanMapperBuilder.buildDefault();
-	}
+    
+    
+    @Bean
+   Mapper mapper() {
+    	
+    	return DozerBeanMapperBuilder.buildDefault();
+    	
+    }
 
 }

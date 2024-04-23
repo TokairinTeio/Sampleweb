@@ -9,24 +9,19 @@ import com.example.demo.repository.UserInfoRepository;
 
 import lombok.RequiredArgsConstructor;
 
-/*チェック処理、DBアクセス(Repositoryクラス呼び出し)*/
-
-/*ログイン画面Service*/
-
 @Service
 @RequiredArgsConstructor
 public class LoginService {
-	/*ユーザー情報テーブルDAO*/
-	private final UserInfoRepository repository;
 	
-	/**
-	 * ユーザー情報テーブルキー検索
-	 * 
-	 * @param loginId ログインID
-	 * @return　ユーザー情報テーブルをキー検索した結果（1件）
-	 */
+	//@RequiredArgsConstructor：private finalで宣言したインスタンス日してnewした物を注入するコンストラクタを実装
+	private final UserInfoRepository repository; //newされたものが入る
+	
+	//repositoryクラスのfindByIdでログインIDをreturn(渡している。)
+	//@Id属性のついたログインIDに対して引数のログインIDで検索をかけにいった結果を返す。
 	public Optional<UserInfo> searchUserById(String loginId){
-		return repository.findById(loginId);
+		
+		//select * from userInfo テーブル名　where loginId=loginId
+		return repository.findById(loginId);//戻り値がOptional<UserInfo>型
 	}
 	
 
